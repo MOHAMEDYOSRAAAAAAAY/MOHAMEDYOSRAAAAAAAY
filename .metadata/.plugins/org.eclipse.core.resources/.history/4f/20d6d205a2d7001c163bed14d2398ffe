@@ -1,0 +1,38 @@
+/*
+ * main.c
+ *
+ *  Created on: May 19, 2022
+ *      Author: YOSRY
+ */
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include "HAL/LCD/LCD_Interface.h"
+#include "HAL/LCD/LCD_Configration.h"
+
+
+int main(void)
+{
+	DDRA = 0xff;
+	DDRB = 0xff;
+
+	LCD_Init();
+
+LCD_CLEAR;
+LCD_SendString("Mohamed Yosry");
+_delay_ms(500);
+LCD_CLEAR;
+while(1){
+for(int i =  0;1 ;i++){
+
+	LCD_SendNumb(i);
+	_delay_ms(500);
+	LCD_CLEAR;
+
+}
+
+}
+
+return 0;
+
+}

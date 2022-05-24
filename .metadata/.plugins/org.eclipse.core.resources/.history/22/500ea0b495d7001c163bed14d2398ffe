@@ -1,0 +1,20 @@
+/*
+ * main.c
+ *
+ *  Created on: May 19, 2022
+ *      Author: YOSRY
+ */
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include "HAL/LCD/LCD_Interface.h"
+#include "HAL/LCD/LCD_Configration.h"
+
+
+int main(void)
+{
+LCD_Init();
+LCD_SendChar(25);
+_delay_ms(500);
+return 0;
+}

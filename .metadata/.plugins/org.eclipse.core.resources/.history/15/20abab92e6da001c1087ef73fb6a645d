@@ -1,0 +1,31 @@
+/*
+ * main.c
+ *
+ *  Created on: May 19, 2022
+ *      Author: YOSRY
+ */
+#include "LIB/STD_TYPES.h"
+#include <avr/io.h>
+#include <util/delay.h>
+#include "HAL/LCD/LCD_Interface.h"
+#include "HAL/LCD/LCD_Configration.h"
+
+
+int main(void) {
+	u8 Packman1[] = {0x00, 0x0E, 0x1F, 0x1C, 0x1C, 0x1F, 0x0E, 0x00};
+	u8 Packman2[] = {0x00, 0x0E, 0x1F, 0x1F, 0x1F, 0x1F, 0x0E, 0x00};
+LCD_Init();
+LCD_WriteToCGRAM(0,Packman1);
+LCD_WriteToCGRAM(1,Packman2);
+LCD_CLEAR;
+while (1)
+	{
+	LCD_voidGoto(0,0);
+LCD_SendChar(0);
+_delay_ms(100);
+LCD_voidGoto(0,0);
+LCD_SendChar(1);
+	}
+
+	return 0;
+}

@@ -1,0 +1,34 @@
+/*
+ * main.c
+ *
+ *  Created on: May 19, 2022
+ *      Author: YOSRY
+ */
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include "HAL/LCD/LCD_Interface.h"
+#include "HAL/LCD/LCD_Configration.h"
+
+
+int main(void)
+{
+	DDRA = 0xff;
+	DDRB = 0xff;
+
+	LCD_Init();
+	LCD_CLEAR;
+LCD_SendString("Hi Ya 2MR");
+	LCD_SendIntNumb(125);
+		_delay_ms(5000);
+
+LCD_CLEAR;
+
+while(1){
+
+
+}
+
+return 0;
+
+}

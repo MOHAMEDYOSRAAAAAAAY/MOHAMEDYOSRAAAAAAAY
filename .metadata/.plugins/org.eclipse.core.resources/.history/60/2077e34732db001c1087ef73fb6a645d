@@ -1,0 +1,86 @@
+/*
+ * main.c
+ *
+ *  Created on: May 19, 2022
+ *      Author: YOSRY
+ */
+#include "LIB/STD_TYPES.h"
+#include "LIB/BIT_MATH.h"
+#include "MCAL/DIO/DIO_Interface.h"
+#include <util/delay.h>
+#include <avr/io.h>
+#include "HAL/LCD/LCD_Interface.h"
+#include "HAL/LCD/LCD_Configration.h"
+u8 Animation = 0;
+void packManUpdate(u8 A_u8new_pos);
+u8 Get_Bot(void);
+#define RIGHT 0
+#define LEFT 1
+#define UP 2
+#define DOWN 3
+#define ELSE 4
+u8 pacMan_Pos[2]={0,0};
+int main(void) {
+	u8 Packman1[] = {0x00, 0x0E, 0x1F, 0x1C, 0x1C, 0x1F, 0x0E, 0x00};
+	u8 Packman2[] = {0x00, 0x00, 0x0E, 0x1F, 0x1F, 0x1F, 0x0E, 0x00};
+LCD_Init();
+DDRD = 0x00;
+PORTD=0xff;
+
+LCD_WriteToCGRAM(0,Packman1);
+LCD_WriteToCGRAM(1,Packman2);
+LCD_CLEAR;
+
+while (1)
+	{
+	packManUpdate(Get_Bot());
+
+
+	}
+
+	return 0;
+}
+void packManUpdate(u8 A_u8new_pos)
+{
+	LCD_voidGoto(pacMan_Pos[0],pacMan_Pos[1]);
+	LCD_SendChar(0b11111110);
+	switch(A_u8new_pos){
+case RIGHT : if(pacMan_Pos[0] >= 1){/*do no thing*/}
+else{
+	LCD_voidGoto(pacMan_Pos[0],pacMan_Pos[1]+1);pacMan_Pos[1]+=1;break;
+}break;
+case LEFT : if(pacMan_Pos[1] == 0){/*do no thing*/}
+
+else{
+LCD_voidGoto(pacMan_Pos[0],pacMan_Pos[1]-1);pacMan_Pos[1]-=1;break;
+}break;
+case UP :
+	if(pacMan_Pos[0] == 0){/*do no thing*/}
+	else{
+	LCD_voidGoto(pacMan_Pos[0]-1,pacMan_Pos[1]);pacMan_Pos[0]-=1;break;
+	}break;
+case DOWN :if(pacMan_Pos[0] == 1){/*do no thing*/}
+else{ LCD_voidGoto(pacMan_Pos[0]+1,pacMan_Pos[1]);pacMan_Pos[0]+=1;break;
+}break;
+
+default :break;
+}
+if(Animation ==1){	Animation = 0;}
+else if(Animation ==0){	Animation = 1;}
+LCD_voidGoto(pacMan_Pos[0],pacMan_Pos[1]);
+LCD_SendChar(Animation);
+
+return;
+}
+u8 Get_Bot(void)
+{
+if(Get_Bit(PIND,0)==0){_delay_ms(10);return RIGHT;}
+if(Get_Bit(PIND,0)==0){_delay_ms(10);return LEFT; }
+if(Get_Bit(PIND,0)==0){_delay_ms(10);return UP; }
+if(Get_Bit(PIND,0)==0){_delay_ms(10);return DOWN; }
+else if(1){ return ELSE;}
+
+
+
+
+}
